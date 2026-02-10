@@ -5,12 +5,23 @@ Not to be confused with forced alignment.
 
 This script uses a pre-existing repository `KnurpsBram/shign` to "shift and align" two existing audio signals.
 
-It does this by calculating the shifting that will maximize correlation between the two waveforms. Then, it pads one the waveform that is too early such that it aligns with the other waveform.
+It does this by calculating the shifting that maximizes the correlation between the two waveforms. Then, it pads one the waveform that is "too early" such that it aligns with the other waveform.
 
 Effectively, it can be used to line up two media files that record the same audio (for example, a video and lapel microphone recording of the same interaction)
 
+## Requirements
+- Python
+- Git
+- FFMPEG (see below)
+
 ## Setup
-Install `KnurpsBram/shign`:
+Open a terminal & clone this repository
+```{bash}
+# Clone repository
+git clone https://github.com/chengyili2005/Aligner.git
+```
+
+Install `KnurpsBram/shign` (can be done wherever):
 ```{bash}
 # Clone repository
 git clone https://github.com/KnurpsBram/shign
@@ -22,12 +33,17 @@ cd ../
 rm -rf shign
 ```
 
-Install FFMPEG for your OS: https://www.ffmpeg.org/download.html
+Install FFMPEG for your OS if you don't already have it
 ```{bash}
 # If you're on Ubuntu/Debian
 sudo apt update
 sudo apt install
 ```
+```{bash}
+# If you're on MacOS (I think)
+brew install ffmpeg
+```
+Or download from their website: https://www.ffmpeg.org/download.html
 
 Install Python dependencies:
 ```{bash}
@@ -37,6 +53,7 @@ pip install -r requirements.txt
 
 ## Usage
 ```
+# Terminal in directory of 'Aligner/'
 python align.py --in1 {file1} --in2 {file2} --pad True
 ```
 Note: If you don't want to pad then just remove the --pad argument.
