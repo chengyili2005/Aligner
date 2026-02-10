@@ -15,7 +15,7 @@ Effectively, it can be used to line up two media files that record the same audi
 - FFMPEG (see below)
 
 ## Setup
-Open a terminal & clone this repository
+Open a terminal & clone this repository:
 ```{bash}
 # Clone repository
 git clone https://github.com/chengyili2005/Aligner.git
@@ -33,7 +33,7 @@ cd ../
 rm -rf shign
 ```
 
-Install FFMPEG for your OS if you don't already have it
+Install FFMPEG for your OS if you don't already have it:
 ```{bash}
 # If you're on Ubuntu/Debian
 sudo apt update
@@ -43,7 +43,7 @@ sudo apt install
 # If you're on MacOS (I think)
 brew install ffmpeg
 ```
-Or download from their website: https://www.ffmpeg.org/download.html
+- Or download from their website: https://www.ffmpeg.org/download.html
 
 Install Python dependencies:
 ```{bash}
@@ -56,7 +56,7 @@ pip install -r requirements.txt
 # Terminal in directory of 'Aligner/'
 python align.py --in1 {file1} --in2 {file2} --pad True
 ```
-Note: If you don't want to pad then just remove the --pad argument.
+Note: If you just want to know how far apart they are and don't want to render any files, just remove the `--pad True` argument.
 
 ## Other notes
 - This doesn't work if the two files are too far apart. If they're a under a minute off there's a good chance it'll work.
