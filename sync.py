@@ -99,39 +99,40 @@ def pad_files(file1, file2, delta_b):
 
   return out1, out2
 
+def calculate_and_sync(inputfile1, inputfile2, pad=False):
+    """Calculates the shift amount and optionally pads the files."""
+    # Load files into audio files
+    audio_1, sr_1 = librosa.load(inputfile1, sr=None)
+    audio_2, sr_2 = librosa.load(inputfile2, sr=None)
+
+    # Get milliseconds needed to shift
+    delta_b = shign.get_shift_ms(audio_a=audio_1, audio_b=audio_2, sr_a=sr_1, sr_b=sr_2)
+    
+    if delta_b > 0:
+        print(f"{delta_b} milliseconds needs to be added to the beginning of {inputfile2}")
+    elif delta_b < 0:
+        print(f"{abs(delta_b)} milliseconds needs to be added to the beginning of {inputfile1}")
+    else:
+        print("files are already lined up")
+
+    # Pad the files respectively
+    if pad:
+        print("Padding files accordingly...")
+        out1, out2 = pad_files(inputfile1, inputfile2, delta_b)
+
+        # Append "shigned_" before the basename and write the files into memory
+        dir1 = os.path.dirname(inputfile1)
+        dir2 = os.path.dirname(inputfile2)
+        base1 = os.path.basename(inputfile1)
+        base2 = os.path.basename(inputfile2)
+        path1 = os.path.join(dir1, f"shigned_{base1}")
+        path2 = os.path.join(dir2, f"shigned_{base2}")
+        write_files(out1, out2, path1, path2)
+
+    # Return the shift amount so your new script can record it
+    return delta_b 
+
 if __name__ == '__main__':
-
-  # Grab argumentsb,
-  args = parse_args()
-  inputfile1 = args.in1
-  inputfile2 = args.in2
-  pad = args.pad
-
-  # Load files into audio files
-  audio_1, sr_1 = librosa.load(inputfile1, sr=None)
-  audio_2, sr_2 = librosa.load(inputfile2, sr=None)
-
-  # Get milliseconds needed to shift
-  delta_b = shign.get_shift_ms(audio_a=audio_1, audio_b=audio_2, sr_a=sr_1, sr_b=sr_2)
-  if delta_b > 0:
-    print(delta_b, "milliseconds needs to be added to the beginning of", inputfile2)
-  elif delta_b < 0:
-    print(abs(delta_b), "milliseconds needs to be added to the beginning of", inputfile1)
-  else:
-    print("files are already lined up")
-
-  # Pad the files respectively
-  if pad:
-    print("Padding files accordingly...")
-    out1, out2 = pad_files(inputfile1, inputfile2, delta_b)
-
-    # Append "shigned_" before the basename and write the files into memory
-    dir1 = os.path.dirname(inputfile1)
-    dir2 = os.path.dirname(inputfile2)
-    base1 = os.path.basename(inputfile1)
-    base2 = os.path.basename(inputfile2)
-    path1 = os.path.join(dir1, f"shigned_{base1}")
-    path2 = os.path.join(dir2, f"shigned_{base2}")
-    write_files(out1, out2, path1, path2)
-  else:
-    pass
+    # CLI execution
+    args = parse_args()
+    calculate_and_sync(args.in1, args.in2, args.pad)

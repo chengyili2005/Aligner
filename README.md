@@ -54,7 +54,7 @@ pip install -r requirements.txt
 ## Usage
 ```
 # Terminal in directory of 'Aligner/'
-python align.py --in1 {file1} --in2 {file2} --pad True
+python sync.py --in1 {file1} --in2 {file2}
 ```
 Note: If you just want to know how far apart they are and don't want to render any files, just remove the `--pad True` argument.
 
